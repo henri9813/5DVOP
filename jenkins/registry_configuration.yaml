@@ -1,0 +1,33 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: redis
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: :80
+  headers:
+    X-Content-Type-Options: [nosniff]
+proxy:
+  remoteurl: https://registry-1.docker.io
+redis:
+  addr: redis:6379
+  password: superPassword
+  db: 0
+  dialtimeout: 10ms
+  readtimeout: 10ms
+  writetimeout: 10ms
+  pool:
+    maxidle: 16
+    maxactive: 64
+    idletimeout: 300s
+delete:
+  enabled: true
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3

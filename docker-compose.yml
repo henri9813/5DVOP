@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  api:
+    build: simple_api
+    volumes:
+    - ./simple_api/student_age.json:/data/student_age.json
+    ports:
+    - 5000:5000
+  front:
+    image: php:apache
+    volumes:
+    - ./website:/var/www/html
+    environment:
+    - USERNAME=toto
+    - PASSWORD=python
+    ports:
+    - 8000:80
+    depends_on:
+      - api

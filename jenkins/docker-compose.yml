@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  registry:
+    image: registry:2
+    restart: always
+    volumes:
+      - ./registry_configuration.yml:/etc/docker/registry/config.yml
+      - ./registry_data:/var/lib/registry
+    ports:
+      - 8000:80
+    depends_on:
+      - redis
+
+  redis:
+    restart: always
+    image: redis:6.2.1-alpine
+    command: "redis-server --requirepass superPassword"
+
+  jenkins:
+    image: jenkins:2.60.3
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+     - ./jenkins_data:/var/jenkins_home
